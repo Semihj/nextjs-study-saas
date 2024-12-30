@@ -1,4 +1,4 @@
-import { handleUploadAI, handleUploadPdf } from "@/lib/gemini/handleUploadAı";
+import { handleUploadAI } from "@/lib/gemini/handleUploadAı";
 import supabase from "@/supabase/supabase";
 import { GoogleAIFileManager } from "@google/generative-ai/server";
 import { NextResponse } from "next/server";
@@ -37,16 +37,11 @@ async function waitForFilesActive(files) {
 
 export const POST = async (req: any) => {
   try {
-    const data = await req.json();
-    const res = await handleUploadPdf({
-      url: data.url,
-      path: data.path,
-    });
+
     return NextResponse.json({
-       ...res,
+       text:"hello world"
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({
       error: error,
     });
