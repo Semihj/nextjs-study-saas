@@ -66,13 +66,6 @@ export default function UploadPage({}: Props) {
     }
   };
 
-  useEffect(() => {
-  if(file.size  < 10 * 1024 * 1024 ) {
-   return alert("File size exceeds the limit of 10MB");
-
-  }
-  }, [file])
-  
   
   
 useEffect(() => {
