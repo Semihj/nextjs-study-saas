@@ -14,6 +14,7 @@ type Props = {};
 export default function UploadPage({}: Props) {
   const [file, setFile] = useState({});
   const [project, setProject] = useState({});
+  const [loading, setLoading] = useState(false)
   console.log(file);
   const inputRef = useRef();
   const params = useParams();
@@ -33,9 +34,11 @@ export default function UploadPage({}: Props) {
     onDrop,
   });
   const handleAI = async (e) => {
-    e.preventDefault();
-    console.log(file);
+    e.preventDefault()
+    console.log(file)
+    setLoading(true)
     try {
+      
       if (file && file.size  < 10 * 1024 * 1024 ) {
         const name = nanoid() + ".pdf";
         const { data: storageData } = await supabase.storage
@@ -49,20 +52,26 @@ export default function UploadPage({}: Props) {
         console.log(pdfData);
         const url = pdfData.publicUrl;
 
-        const { data: spData } = await supabase
+         await supabase
           .from("study-projects")
           .update({
             pdfData: { url },
           })
           .eq("id", params.id)
           .select();
-        console.log(spData);
+        setLoading(false)
+
       } else {
        alert("File Can't be more than 10MB")
        setFile({})
+       setLoading(false)
+
       }
     } catch (error) {
-      console.log({ error });
+      console.log({ error })
+      setLoading(false)
+
+      
     }
   };
 
@@ -91,19 +100,24 @@ useEffect(() => {
       // Handle unexpected errors
     }
   };
-
-  getProject();
-}, []);
+  if(!project.pdfData && !loading ) {
+     getProject();
+  }
+ 
+}, [loading]);
  
 return (
     <div className="w-full h-full min-h-screen  ">
-      {project?.pdfData ? (
+      {loading && <div className="w-full h-screen flex justify-center items-center ">
+        <h1 className="text-3xl lg:text-5xl animate-pulse font-semibold" >Loading</h1>
+      </div> }
+      {project?.pdfData && !loading ? (
         <div className="w-full h-full flex justify-center items-center text-3xl lg:text-5xl font-semibold  ">
-         <h1 className="max-w-md text-center  " > There is Already a PDF Uploaded
+         <h1 className="max-w-md text-center  " > PDF uploaded succesfully
         </h1></div>
       ) : (
         <div className="w-full h-full ">
-          {file?.name ? (
+          {!project?.pdfData && file?.name && !loading ? (
             <div className="w-full h-full flex justify-center items-center ">
               <Button className="mt-10  " onClick={handleAI}>
                 Submit{" "}
