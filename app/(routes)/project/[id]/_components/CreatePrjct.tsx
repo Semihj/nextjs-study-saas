@@ -14,10 +14,11 @@ import { useUser } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 
 type Props = {
-  setFetch:any
+  setFetch:any;
+  isAllowed:boolean
 };
 
-export default function CreatePrjct({setFetch}: Props) {
+export default function CreatePrjct({setFetch,isAllowed}: Props) {
   const [title, setTitle] = useState("");
   const {user} = useUser()
 console.log(user?.id);
@@ -50,6 +51,7 @@ console.log(user?.id);
         <DialogHeader className="w-full justify-start flex items-start">
           <DialogTitle>Create A Project</DialogTitle>
         </DialogHeader>
+        {isAllowed ?  
         <form 
         onClick={createProject}
         className="w-full flex flex-col  ">
@@ -64,7 +66,12 @@ console.log(user?.id);
               Create
             </Button>
           </DialogTrigger>
-        </form>
+        </form>:<div>
+          <h1 className="text-2xl" >
+          Only 2 projects allowed for Free Plan
+
+          </h1>
+        </div> }
       </DialogContent>
     </Dialog>
   );

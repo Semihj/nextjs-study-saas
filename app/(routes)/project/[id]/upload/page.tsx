@@ -6,7 +6,6 @@ import { nanoid } from "@reduxjs/toolkit";
 import { ImagePlus } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Viewer,Worker  } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { useDropzone } from "react-dropzone";
 
@@ -14,13 +13,18 @@ type Props = {};
 
 export default function UploadPage({}: Props) {
   const [file, setFile] = useState({});
-  const [project, setProject] = useState({  });
+  const [project, setProject] = useState({});
   console.log(file);
   const inputRef = useRef();
   const params = useParams();
   const onDrop = useCallback((acceptedFile) => {
-    setFile(acceptedFile);
-    console.log(acceptedFile);
+    // Check if file size is less than 10MB
+    if (acceptedFile[0].size < 10 * 1024 * 1024) {
+      setFile(acceptedFile[0]);
+      console.log(acceptedFile);
+    } else {
+       return alert("File size exceeds the limit of 10MB");
+    }
   }, []);
   console.log(project);
   
@@ -32,7 +36,7 @@ export default function UploadPage({}: Props) {
     e.preventDefault();
     console.log(file);
     try {
-      if (file) {
+      if (file && file.size  < 10 * 1024 * 1024 ) {
         const name = nanoid() + ".pdf";
         const { data: storageData } = await supabase.storage
           .from("pdfs")
@@ -54,17 +58,27 @@ export default function UploadPage({}: Props) {
           .select();
         console.log(spData);
       } else {
-        return console.log("there is no file");
+       alert("File Can't be more than 10MB")
+       setFile({})
       }
     } catch (error) {
       console.log({ error });
     }
   };
 
+  useEffect(() => {
+  if(file.size  < 10 * 1024 * 1024 ) {
+   return alert("File size exceeds the limit of 10MB");
+
+  }
+  }, [file])
+  
+  
   
 useEffect(() => {
   const getProject = async () => {
     try {
+      
       const { data, error } = await supabase
         .from("study-projects")
         .select("pdfData")
@@ -99,7 +113,7 @@ return (
           {file?.name ? (
             <div className="w-full h-full flex justify-center items-center ">
               <Button className="mt-10  " onClick={handleAI}>
-                Submit{" "}npm install @react-pdf-viewer/core
+                Submit{" "}
               </Button>
             </div>
           ) : (
@@ -108,6 +122,7 @@ return (
                 {...getInputProps()}
                 type="file"
                 hidden
+                
                 accept="application/pdf"
                 ref={inputRef}
                 onChange={(e) => setFile(e.target.files[0])}

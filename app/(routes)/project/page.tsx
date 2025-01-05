@@ -58,7 +58,7 @@ export default function ProjectPage({}: Props) {
         <p className="font-semibold text-gray-500 text-2xl mt-3">
           {user?.fullName}{" "}
         </p>
-        <DialogComp setFetch={setFetch} />
+        <DialogComp isAllowed={projects.length < 2} setFetch={setFetch} />
       </div>
       <div className="border w-full flex flex-col min-h-[500px] gap-3 p-4 ">
         <h1 className="font-semibold text-3xl">Projects</h1>
