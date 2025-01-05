@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore, AppStore } from "@/lib/redux/store"
 import { PersistGate } from 'redux-persist/integration/react'
+import { useUser } from '@clerk/nextjs'
 
 export default function StoreProvider({
   children,
@@ -15,6 +16,7 @@ export default function StoreProvider({
     // Create the store instance the first time this renders
     storeRef.current = makeStore()
   }
+  
 
   return (
     <Provider store={storeRef.current}>

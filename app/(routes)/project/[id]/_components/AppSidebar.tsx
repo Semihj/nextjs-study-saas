@@ -21,16 +21,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CreatePrjct from "./CreatePrjct";
+import Image from "next/image";
 
 type Props = {};
 
 export default function AppSidebar({}: Props) {
+  const {user:clerkUser} = useUser()
   const [file, setFile] = useState<any>([]);
   const [project, setProject] = useState({});
   const [allProjects, setAllProjects] = useState([]);
   const [fetch, setFetch] = useState(true);
   const [showProjects, setShowProjects] = useState(false);
-  console.log(JSON.stringify(file[0]));
   const { user } = useUser();
   const params = useParams();
 
@@ -93,35 +94,7 @@ export default function AppSidebar({}: Props) {
     },
   ];
 
-  const handleAI = async (e) => {
-    e.preventDefault();
-    console.log(file);
-    try {
-      if (file.length > 0) {
-        const name = nanoid() + ".pdf";
-        const { data: storageData, error } = await supabase.storage
-          .from("pdfs")
-          .upload(name, file[0]);
-
-        const { data: pdfData } = await supabase.storage
-          .from("pdfs")
-          .getPublicUrl(name);
-        console.log(pdfData);
-        const url = pdfData.publicUrl;
-
-        const { data: spData } = await supabase
-          .from("study-projects")
-          .insert({
-            pdfData: { ...storageData, url },
-          })
-          .select();
-      } else {
-        return console.log("there is no file");
-      }
-    } catch (error) {
-      console.log({ error });
-    }
-  };
+ 
   if (fetch) {
     getAllProjects();
   }
@@ -130,8 +103,6 @@ export default function AppSidebar({}: Props) {
     getAllProjects();
   }, []);
  */
-  console.log(project);
-  console.log(allProjects);
 
   return (
     <Sidebar className=" ">
@@ -167,16 +138,14 @@ export default function AppSidebar({}: Props) {
           </div>
         </div>
         <div className="lg:flex flex-col w-full ">
-          <input
-            type="file"
-            onChange={(e) => {
-              setFile(e.target.files);
-            }}
-          />
-          <div
+      
+          <Image
+            src={clerkUser?.imageUrl || ""}
+            alt="image"
+            width={100}
+            height={100}
             className="w-[140px] h-[140px] bg-gray-400 rounded-md shadow-lg "
-            onClick={handleAI}
-          ></div>
+          ></Image>
           <div className="flex flex-col  mt-4 ">
             <h2 className="text-2xl">Semih S.</h2>
             <p className="text-gray-500 text-lg">@semihs</p>

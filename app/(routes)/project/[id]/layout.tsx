@@ -1,6 +1,7 @@
 import React from "react";
 import AppSidebar from "./_components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import Token from "./_components/Token";
 
 type Props = {
   children: React.ReactNode;
@@ -14,8 +15,10 @@ export default function Layout({ children }: Props) {
       <SidebarTrigger>
       
        </SidebarTrigger> 
-       <main className="w-full h-full lg:p-4 ">
-       {children}</main>
+       <main className="w-full flex flex-col h-full lg:p-4 ">
+        <Token/>
+       {children}
+       </main>
       </SidebarProvider>
      
     </div>
