@@ -145,11 +145,8 @@ export default function AppSidebar({}: Props) {
             width={100}
             height={100}
             className="w-[140px] h-[140px] bg-gray-400 rounded-md shadow-lg "
-          ></Image>
-          <div className="flex flex-col  mt-4 ">
-            <h2 className="text-2xl">Semih S.</h2>
-            <p className="text-gray-500 text-lg">@semihs</p>
-          </div>
+         / >
+        
         </div>
         <div className="flex flex-col gap-3 mt-5">
           {sidebarLinks.map((item) => (

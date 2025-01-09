@@ -188,7 +188,6 @@ export default function GetQuestions({}: Props) {
   const { token } = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const {user} = useUser()
-  console.log(user);
   
 
   const getProjectUrl = async () => {

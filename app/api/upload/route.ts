@@ -13,8 +13,6 @@ async function uploadToGemini(path, mimeType) {
     displayName: path,
   });
   const file = uploadResult.file;
-  console.log(`Uploaded file ${file.displayName} as: ${file.name}`);
-  console.log(file);
 
   return file;
 }

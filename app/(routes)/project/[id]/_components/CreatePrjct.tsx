@@ -21,7 +21,6 @@ type Props = {
 export default function CreatePrjct({setFetch,isAllowed}: Props) {
   const [title, setTitle] = useState("");
   const {user} = useUser()
-console.log(user?.id);
 
   const createProject = async (e) => {
     e.preventDefault()
@@ -36,7 +35,6 @@ console.log(user?.id);
         })
         .select()
         ;
-        console.log(data);
         setFetch(true)
         
     } catch (error) {

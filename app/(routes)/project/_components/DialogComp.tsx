@@ -24,7 +24,6 @@ export default function DialogComp({setFetch,isAllowed}: Props) {
   const [title, setTitle] = useState("");
   const {user} = useUser()
   const router = useRouter()
-console.log(user?.id);
 
   const createProject = async (e) => {
     e.preventDefault()
@@ -39,7 +38,6 @@ console.log(user?.id);
         })
         .select()
         ;
-        console.log(data);
         setFetch(true)
         
     } catch (error) {

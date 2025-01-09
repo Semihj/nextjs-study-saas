@@ -17,8 +17,6 @@ export default function ProjectPage({}: Props) {
   const { user } = useUser();
   const [projects, setProjects] = useState([]);
   const [fetch, setFetch] = useState(true);
-  console.log(user?.id);
-  console.log(projects);
 
   const getProjects = async () => {
     try {

@@ -15,19 +15,16 @@ export default function UploadPage({}: Props) {
   const [file, setFile] = useState({});
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false)
-  console.log(file);
   const inputRef = useRef();
   const params = useParams();
   const onDrop = useCallback((acceptedFile) => {
     // Check if file size is less than 10MB
     if (acceptedFile[0].size < 10 * 1024 * 1024) {
       setFile(acceptedFile[0]);
-      console.log(acceptedFile);
     } else {
        return alert("File size exceeds the limit of 10MB");
     }
   }, []);
-  console.log(project);
   
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -35,7 +32,6 @@ export default function UploadPage({}: Props) {
   });
   const handleAI = async (e) => {
     e.preventDefault()
-    console.log(file)
     setLoading(true)
     try {
       
@@ -44,12 +40,10 @@ export default function UploadPage({}: Props) {
         const { data: storageData } = await supabase.storage
           .from("pdfs")
           .upload(name, file);
-        console.log(storageData);
 
         const { data: pdfData } = await supabase.storage
           .from("pdfs")
           .getPublicUrl(name);
-        console.log(pdfData);
         const url = pdfData.publicUrl;
 
          await supabase

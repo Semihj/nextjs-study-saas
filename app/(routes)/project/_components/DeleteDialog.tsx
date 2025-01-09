@@ -31,7 +31,6 @@ export default function DeleteDialog({ id,setFetch
         ;
         if(error) console.log(error);
         
-        console.log(data);
         setFetch(true)
         
     } catch (error) {

@@ -26,7 +26,6 @@ export default function EditDialog({ id, title ,setFetch}: Props) {
         .update({ title: projectTitle }) // Update with projectTitle state
         .eq("id", id)
         .select();
-      console.log(data);
       setFetch(true)
     } catch (error) {
       console.error("Error updating project:", error);
