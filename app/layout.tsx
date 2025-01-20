@@ -19,7 +19,10 @@ export const metadata: Metadata = {
   title: "Chat with PDF",
   description:
     "Transform your PDFs into interactive learning experiences. Our AI-powered platform allows you to effortlessly ask questions about your documents and receive instant, insightful answers. Need to test your understanding? Easily generate engaging quizzes directly from your PDFs, complete with multiple-choice, true/false, and short-answer questions.",
-};
+    verification: {
+      google: "g3-BCfDeRPf6XBNGCbsB3wcxkkaC4DMGoRzZYSmlhEo"
+    }
+  };
 
 export default function RootLayout({
   children,
