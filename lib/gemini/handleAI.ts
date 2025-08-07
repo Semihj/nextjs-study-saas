@@ -4,7 +4,7 @@ const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+  model: "gemini-2.5-pro",
 });
 
 export async function handleAskAI({ text, uri }: { text: any; uri: any }) {
